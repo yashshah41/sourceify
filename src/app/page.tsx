@@ -8,27 +8,15 @@ const Home: React.FC = () => {
   const [output, setOutput] = useState('');
 
   const handleButtonClick = async () => {
-    setDisplayedPrompt(prompt); // Save the prompt to displayedPrompt
+    setDisplayedPrompt(prompt);
     setShowInput(true);
-
-    try {
       const response = await fetch('http://127.0.0.1:5000/api/sources', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "prompt": prompt})        
+        body: JSON.stringify({ prompt: prompt }) // Use prompt state here
       });
-      setOutput(JSON.stringify)
-      if (response.ok) {
-        const data = await response.json();
-        setOutput(data.response);
-      } else {
-        console.error('Error during API request:', response.status, response.statusText);
-        setOutput('An error occurred during the API request.');
-      }
-    } catch (error) {
-      console.error('API request error:', error);
-      setOutput('An error occurred.');
-    }
+      
+    
   };
 
   return (
