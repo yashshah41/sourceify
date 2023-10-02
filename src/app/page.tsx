@@ -15,7 +15,11 @@ const Home: React.FC = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: prompt }) // Use prompt state here
       });
-      
+    const data = await response.json();
+    console.log(data)
+    setOutput(data['results'][0]['title'] + "\n" + data['results'][1]['title'] + "\n" + data['results'][2]['title'] + "\n" + data['results'][3]['title'] + "\n" + data['results'][4]['title'])
+
+    
     
   };
 
