@@ -8,18 +8,35 @@ const Home: React.FC = () => {
   const [output, setOutput] = useState('');
 
   const handleButtonClick = async () => {
-    setDisplayedPrompt(prompt);
     setShowInput(true);
+    setDisplayedPrompt(displayedPrompt);
+;    try {
       const response = await fetch('http://127.0.0.1:5000/api/sources', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: prompt }) // Use prompt state here
+        body: JSON.stringify({ prompt: prompt })
       });
-    const data = await response.json();
-    console.log(data)
-    setOutput("1. " + data['results'][0]['title'] + "\n" + "2. " + data['results'][1]['title'] + "\n" +  "3. " + data['results'][2]['title'] + "\n" + "4." + data['results'][3]['title'] + "\n" + "5. " + data['results'][4]['title'])
-    
+
+      if (!response.ok) {
+        throw new Error('Flask server not working properly');
+      }
+
+      const data = await response.json();
+
+      const formattedTitles = data['results'].map((result: Result, index: number) => (
+        <div key={index}>
+          <a href={result['url']} target="_blank" rel="noopener noreferrer">
+            {index + 1}. {result['title']}
+          </a>
+        </div>
+      ));
+
+      setOutput(formattedTitles);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-between">
