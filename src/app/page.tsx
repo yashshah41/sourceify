@@ -17,9 +17,7 @@ const Home: React.FC = () => {
       });
     const data = await response.json();
     console.log(data)
-    setOutput(data['results'][0]['title'] + "\n" + data['results'][1]['title'] + "\n" + data['results'][2]['title'] + "\n" + data['results'][3]['title'] + "\n" + data['results'][4]['title'])
-
-    
+    setOutput("1. " + data['results'][0]['title'] + "\n" + "2. " + data['results'][1]['title'] + "\n" +  "3. " + data['results'][2]['title'] + "\n" + "4." + data['results'][3]['title'] + "\n" + "5. " + data['results'][4]['title'])
     
   };
 
